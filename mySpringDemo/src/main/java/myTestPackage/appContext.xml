@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+	default-autowire="byType">
+
+<bean id="fruit" class="fooddemo.Fruit" primary="true"></bean>
+
+<bean id="fruitwithName" class="fooddemo.Fruit">
+<constructor-arg index="0" value="Apple" />
+</bean>
+
+<bean id="Vegatable" class="fooddemo.Vegatable" primary="true"></bean>
+<bean id="veg" class="fooddemo.Vegatable"></bean>
+<bean id="VegatableWithName" class="fooddemo.Vegatable">
+<property name="myName" value="Brocolli"></property>
+</bean>
+
+<bean id="fruitWithNameListandMap" class="fooddemo.Fruit">
+<property name="myFruitNameList">
+	<list>
+	<value>Apple</value>
+	<value>Banana</value>
+	<value>Orange</value>
+	</list>
+</property>
+<property name="myFruitNameMap">
+	<map>
+		<entry key="Apple" value="Red" ></entry>	
+		<entry key="Banana" value="Yellow" ></entry>
+		<entry key="Orange" value="Orange" ></entry>
+	</map>
+</property>
+</bean>
+
+<bean id="VegatableWithNameUsingP-namespace" class="fooddemo.Vegatable" p:myName="Squash">
+</bean>
+<bean id="meat" class="fooddemo.Meat"></bean>
+<bean id="dairy" class="fooddemo.Dairy"></bean>
+
+<bean id="meal" class="fooddemo.Meal">
+<property name="fruit" ref="fruit"/>
+<property name="meat" ref="meat"/>
+<property name="dairy" ref="dairy"/>
+<property name="veg" ref="Vegatable"/>
+</bean>
+
+<bean id="mealWithContructorArg" class="fooddemo.Meal">
+<constructor-arg index="0" ref="fruit"></constructor-arg>
+<constructor-arg index="1" ref="dairy"></constructor-arg>
+<constructor-arg index="2" ref="meat"></constructor-arg>
+<constructor-arg index="3" ref="Vegatable"></constructor-arg>
+</bean>
+
+<bean id="mealWithContructorArgWithName" class="fooddemo.Meal">
+<constructor-arg name="f" ref="fruit"></constructor-arg>
+<constructor-arg name="d" ref="dairy"></constructor-arg>
+<constructor-arg name="m" ref="meat"></constructor-arg>
+<constructor-arg name="v" ref="Vegatable"></constructor-arg>
+</bean>
+
+<!-- <context:property-placeholder location="src/main/java/myApp.properties"/>
+
+<bean id="fruitsUsingExternalProperty" class="fooddemo.Fruit" >
+<property name="definition" value="${def-fruit}"></property>
+</bean>
+ -->
+ 
+ <bean id="autoWiredMeal" class="fooddemo.Meal" autowire="byType"></bean>
+
+
+ <bean id="autoWiredMealByName" class="fooddemo.Meal" autowire="byName"></bean>
+ <bean id="autoWiredMealConstructor" class="fooddemo.Meal" autowire="constructor"></bean>
+ <bean id="autoWiredMealDefault" class="fooddemo.Meal"></bean>
+</beans>

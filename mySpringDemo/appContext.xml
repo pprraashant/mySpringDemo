@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+<bean id="fruit" class="fooddemo.Fruit"></bean>
+
+<bean id="fruitwithName" class="fooddemo.Fruit">
+<constructor-arg index="0" value="Apple" />
+</bean>
+
+<bean id="Vegatable" class="fooddemo.Vegatable"></bean>
+
+<bean id="VegatableWithName" class="fooddemo.Vegatable">
+<property name="myName" value="Brocolli"></property>
+</bean>
+
+<bean id="fruitWithNameListandMap" class="fooddemo.Fruit">
+<property name="myFruitNameList">
+	<list>
+	<value>Apple</value>
+	<value>Banana</value>
+	<value>Orange</value>
+	</list>
+</property>
+<property name="myFruitNameMap">
+	<map>
+		<entry key="Apple" value="Red" ></entry>	
+		<entry key="Banana" value="Yellow" ></entry>
+		<entry key="Orange" value="Orange" ></entry>
+	</map>
+</property>
+</bean>
+
+<bean id="VegatableWithNameUsingP-namespace" class="fooddemo.Vegatable" p:myName="Squash">
+</bean>
+<bean id="meat" class="fooddemo.Meat"></bean>
+<bean id="dairy" class="fooddemo.Dairy"></bean>
+
+<context:property-placeholder location="src/main/java/myApp.properties" />
+
+<bean id="fruitsUsingExternalProperty" class="fooddemo.Fruit" >
+<property name="definition" value="${def-fruit}"></property>
+</bean>
+
+<bean id="mealOuterBean" class="fooddemo.Meal">
+<property name="fruit">
+<bean id ="appleInnerBean" class="fooddemo.Apple" scope="singleton"
+	init-method="initMethod"
+	destroy-method="destoryMethod">
+<property name="name" value="apple"></property>
+<property name="description" value="I am Apple"></property>
+</bean>
+</property>
+</bean>
+</beans>
